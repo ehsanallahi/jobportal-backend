@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * banner router
+ * applied-job router
  */
 
 const { createCoreRouter } = require('@strapi/strapi').factories;
 
-module.exports = createCoreRouter('api::banner.banner');
+module.exports = createCoreRouter('api::applied-job.applied-job');

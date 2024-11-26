@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * banner service
+ * job-post service
  */
 
 const { createCoreService } = require('@strapi/strapi').factories;
 
-module.exports = createCoreService('api::banner.banner');
+module.exports = createCoreService('api::job-post.job-post');

@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "job_post_candidates",
+  "info": {
+    "singularName": "job-post-candidate",
+    "pluralName": "job-post-candidates",
+    "displayName": "Job Post Candidate"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "job_post": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::job-post.job-post",
+      "inversedBy": "job_post_candidates"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "job_post_candidates"
+    },
+    "application_date": {
+      "type": "datetime"
+    },
+    "candidate_status": {
+      "type": "enumeration",
+      "enum": [
+        "Pending",
+        "Shortlisted",
+        "Rejected",
+        "Accepted"
+      ]
+    }
+  }
+}

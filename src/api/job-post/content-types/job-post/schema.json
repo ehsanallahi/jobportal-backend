@@ -1,0 +1,61 @@
+{
+  "kind": "collectionType",
+  "collectionName": "job_posts",
+  "info": {
+    "singularName": "job-post",
+    "pluralName": "job-posts",
+    "displayName": "job-post"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "blocks"
+    },
+    "job_type": {
+      "type": "enumeration",
+      "enum": [
+        "Permanent",
+        "Contract"
+      ]
+    },
+    "education": {
+      "type": "enumeration",
+      "enum": [
+        "Master",
+        "Bachelor",
+        "Intermediate"
+      ]
+    },
+    "industry": {
+      "type": "enumeration",
+      "enum": [
+        "Business",
+        "Banking",
+        "Education",
+        "IT / Software",
+        "Other"
+      ]
+    },
+    "salary": {
+      "type": "biginteger"
+    },
+    "job_post_candidates": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::job-post-candidate.job-post-candidate",
+      "mappedBy": "job_post"
+    },
+    "saved_job": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::applied-job.applied-job",
+      "inversedBy": "job_posts"
+    }
+  }
+}

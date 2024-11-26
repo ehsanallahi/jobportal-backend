@@ -369,12 +369,13 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiBannerBanner extends Struct.CollectionTypeSchema {
-  collectionName: 'banners';
+export interface ApiAppliedJobAppliedJob extends Struct.CollectionTypeSchema {
+  collectionName: 'applied_jobs';
   info: {
-    displayName: 'Banner';
-    pluralName: 'banners';
-    singularName: 'banner';
+    description: '';
+    displayName: 'saved job';
+    pluralName: 'applied-jobs';
+    singularName: 'applied-job';
   };
   options: {
     draftAndPublish: true;
@@ -383,14 +384,168 @@ export interface ApiBannerBanner extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    job_posts: Schema.Attribute.Relation<'oneToMany', 'api::job-post.job-post'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::banner.banner'
+      'api::applied-job.applied-job'
     > &
       Schema.Attribute.Private;
-    pic: Schema.Attribute.Media<'images'>;
     publishedAt: Schema.Attribute.DateTime;
+    saved_date: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    users_permissions_user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
+export interface ApiCompanyCompany extends Struct.CollectionTypeSchema {
+  collectionName: 'companies';
+  info: {
+    displayName: 'company';
+    pluralName: 'companies';
+    singularName: 'company';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    address: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.Email;
+    industry: Schema.Attribute.Enumeration<
+      ['Business', 'Banking', 'IT/Software', 'Others']
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::company.company'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    website: Schema.Attribute.String;
+  };
+}
+
+export interface ApiCvCv extends Struct.CollectionTypeSchema {
+  collectionName: 'cvs';
+  info: {
+    displayName: 'CV';
+    pluralName: 'cvs';
+    singularName: 'cv';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    date: Schema.Attribute.DateTime;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::cv.cv'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    upload: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    users_permissions_user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
+export interface ApiJobPostCandidateJobPostCandidate
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'job_post_candidates';
+  info: {
+    displayName: 'Job Post Candidate';
+    pluralName: 'job-post-candidates';
+    singularName: 'job-post-candidate';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    application_date: Schema.Attribute.DateTime;
+    candidate_status: Schema.Attribute.Enumeration<
+      ['Pending', 'Shortlisted', 'Rejected', 'Accepted']
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    job_post: Schema.Attribute.Relation<'manyToOne', 'api::job-post.job-post'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::job-post-candidate.job-post-candidate'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    users_permissions_user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
+export interface ApiJobPostJobPost extends Struct.CollectionTypeSchema {
+  collectionName: 'job_posts';
+  info: {
+    displayName: 'job-post';
+    pluralName: 'job-posts';
+    singularName: 'job-post';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Blocks;
+    education: Schema.Attribute.Enumeration<
+      ['Master', 'Bachelor', 'Intermediate']
+    >;
+    industry: Schema.Attribute.Enumeration<
+      ['Business', 'Banking', 'Education', 'IT / Software', 'Other']
+    >;
+    job_post_candidates: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::job-post-candidate.job-post-candidate'
+    >;
+    job_type: Schema.Attribute.Enumeration<['Permanent', 'Contract']>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::job-post.job-post'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    salary: Schema.Attribute.BigInteger;
+    saved_job: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::applied-job.applied-job'
+    >;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -862,11 +1017,16 @@ export interface PluginUsersPermissionsUser
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    cvs: Schema.Attribute.Relation<'oneToMany', 'api::cv.cv'>;
     email: Schema.Attribute.Email &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    job_post_candidates: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::job-post-candidate.job-post-candidate'
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -884,6 +1044,10 @@ export interface PluginUsersPermissionsUser
     role: Schema.Attribute.Relation<
       'manyToOne',
       'plugin::users-permissions.role'
+    >;
+    saved_jobs: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::applied-job.applied-job'
     >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -907,7 +1071,11 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
-      'api::banner.banner': ApiBannerBanner;
+      'api::applied-job.applied-job': ApiAppliedJobAppliedJob;
+      'api::company.company': ApiCompanyCompany;
+      'api::cv.cv': ApiCvCv;
+      'api::job-post-candidate.job-post-candidate': ApiJobPostCandidateJobPostCandidate;
+      'api::job-post.job-post': ApiJobPostJobPost;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
